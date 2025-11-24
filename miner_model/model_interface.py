@@ -9,6 +9,7 @@ and implement the predict() method.
 
 from abc import ABC, abstractmethod
 from typing import Tuple, Optional, List
+import bittensor as bt
 
 
 class PredictionModel(ABC):

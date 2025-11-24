@@ -7,5 +7,10 @@ These serve as templates for contributors to understand how to implement their o
 
 from .simple_model import SimpleAPIModel
 
-__all__ = ['SimpleAPIModel']
+# Try to import LSTM model (may fail if TensorFlow not installed)
+try:
+    from .lstm_model import LSTMModel
+    __all__ = ['SimpleAPIModel', 'LSTMModel']
+except ImportError:
+    __all__ = ['SimpleAPIModel']
 

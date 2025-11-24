@@ -34,8 +34,10 @@ from bittbridge.base.miner import BaseMinerNeuron
 
 # Import the model interface and example model
 from .model_interface import PredictionModel
-# Import the simple example model, this placeholder should be changed with your own model
+# Import the simple example model (fallback if no student model found)
 from .example_models.simple_model import SimpleAPIModel
+# Import auto-discovery utility
+from .utils.model_loader import load_student_model
 
 
 class Miner(BaseMinerNeuron):
@@ -278,18 +280,25 @@ class Miner(BaseMinerNeuron):
 
 if __name__ == "__main__":
     # ============================================================
-    # STEP 5: INSTANTIATE YOUR MODEL
+    # AUTO-DISCOVER STUDENT MODEL
     # ============================================================
-    # Replace SimpleAPIModel() with your own model.
+    # The miner will automatically find and load your model from
+    # the student_models/ folder. Just put your model file there!
     #
-    # Example:
-    #   from my_models import MyCustomModel
-    #   model = MyCustomModel()
-    #   miner = Miner(model=model)
+    # If no student model is found, it will use SimpleAPIModel as fallback.
     # ============================================================
     
-    # Use the simple example model (or replace with your own)
-    model = SimpleAPIModel()
+    # Try to load student model from student_models/ folder
+    model = load_student_model()
+    
+    # Fallback to simple example model if no student model found
+    if model is None:
+        bt.logging.info("No student model found, using SimpleAPIModel as fallback")
+        bt.logging.info("To use your own model:")
+        bt.logging.info("  1. Copy student_models/template.py to student_models/your_model.py")
+        bt.logging.info("  2. Fill in the 3 sections with your code from the notebook")
+        bt.logging.info("  3. Run the miner again")
+        model = SimpleAPIModel()
     
     # Create and run the miner
     with Miner(model=model) as miner:

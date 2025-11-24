@@ -2,18 +2,11 @@
 Bittbridge Miner Model Plugin Package
 
 This package provides a plugin system for integrating predictive models with the Bittbridge subnet.
-It includes:
-- Model interface definition
-- Example model implementations
-- Miner plugin that integrates models with the network
 
 Quick Start:
-    from miner_model.miner_plugin import Miner
-    from miner_model.example_models import SimpleAPIModel
-    
-    model = SimpleAPIModel()
-    miner = Miner(model=model)
-    miner.run()
+    1. Copy student_models/template.py to student_models/your_model.py
+    2. Fill in the 3 sections with your code from notebook
+    3. Run: python -m miner_model.miner_plugin --netuid 420 --subtensor.network test ...
 """
 
 from .model_interface import PredictionModel
